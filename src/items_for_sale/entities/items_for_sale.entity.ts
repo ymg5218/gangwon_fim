@@ -12,5 +12,5 @@ export class ItemsForSale {
     @PrimaryGeneratedColumn({type: 'int', name: 'item_id'})
     item_id: number;
 
-    @Column
+    // @Column
 }
