@@ -1,13 +1,15 @@
 import { IsNotEmpty, IsNumber, IsString, } from "class-validator";
+import { PrimaryGeneratedColumn } from "typeorm";
 
 export class CreateItemsForSaleDto {
 
-    @IsNumber()
-    item_id: number;
+    @PrimaryGeneratedColumn()
+    item_id : number;
 
     @IsNumber()
     @IsNotEmpty()
     cat_id: number;
+
 
     @IsString()
     @IsNotEmpty()
