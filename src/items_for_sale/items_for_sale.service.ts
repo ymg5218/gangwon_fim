@@ -4,7 +4,6 @@ import { UpdateItemsForSaleDto } from './dto/update-items_for_sale.dto';
 import { ItemsForSale } from './entities/items_for_sale.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { throwIfEmpty } from 'rxjs';
 
 @Injectable()
 export class ItemsForSaleService {
@@ -13,26 +12,30 @@ export class ItemsForSaleService {
     private itemforsaleRepository: Repository<ItemsForSale>,
   ){}
 
-  create(createItemsForSaleDto: CreateItemsForSaleDto) {
-    this.itemforsaleRepository.save(createItemsForSaleDto).then(() => throwIfEmpty())
-    return 'This action adds a new itemsForSale';
+  async create(createItemsForSaleDto: CreateItemsForSaleDto) {
+    const item = ItemsForSale.from(createItemsForSaleDto);
+
+    const { item_id } = await this.itemforsaleRepository.save(item);
+
+    // this.itemforsaleRepository.save(createItemsForSaleDto).then(() => throwIfEmpty())
+    return item_id;
   }
 
-  findAll(): Promise<ItemsForSale[]> {
-    return this.itemforsaleRepository.find();
+  async findAll(): Promise<ItemsForSale[]> {
+    return await this.itemforsaleRepository.find();
   }
 
-  async findOne(id : number) : Promise<ItemsForSale> {
-    const item = await this.itemforsaleRepository.findOneBy({ item_id: id });
+  async findOne(item_id : number) : Promise<ItemsForSale> {
+    const item = await this.itemforsaleRepository.findOne({ where : { item_id : item_id}});
 
     if (!item){
-      throw new NotFoundException(`상품 아이디 ${ id }를 찾을 수 없음.`)
+      throw new NotFoundException(`상품 아이디 ${ item_id }를 찾을 수 없음.`)
     }
-    return item;
+    return await item;
   }
 
   async update(item_id: number, updateItemsForSaleDto: UpdateItemsForSaleDto) : Promise<ItemsForSale>{
-    const item = await this.itemforsaleRepository.findOneBy({ item_id });
+    const item = await this.itemforsaleRepository.findOne({ where : { item_id : item_id}});
 
     if (!item){
       throw new NotFoundException(`상품 아이디 ${ item_id }를 찾을 수 없음.`)
@@ -43,7 +46,7 @@ export class ItemsForSaleService {
     return await this.itemforsaleRepository.save(item);
   }
 
-  remove(item_id: number) {
-    return this.itemforsaleRepository.delete(item_id);
+  async remove(item_id: number) {
+    return await this.itemforsaleRepository.delete(item_id);
   }
 }

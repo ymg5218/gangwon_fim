@@ -26,4 +26,6 @@ export class CreateItemsForSaleDto {
 
     @IsString()
     item_info: string;
+
+    
 }

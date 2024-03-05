@@ -16,6 +16,8 @@ import { WishlistModule } from './wishlist/wishlist.module';
 import { PurchaseRecordModule } from './purchase_record/purchase_record.module';
 import { DetailedPurchaseRecordModule } from './detailed_purchase_record/detailed_purchase_record.module';
 import { DeliveryRecordModule } from './delivery_record/delivery_record.module';
+import { DetailedCategory } from './detailed_categories/entities/detailed_category.entity';
+import { TopCategory } from './top_categories/entities/top_category.entity';
 
 @Module({
   imports: [
@@ -23,13 +25,15 @@ import { DeliveryRecordModule } from './delivery_record/delivery_record.module';
       type: "oracle",
       host: "localhost",
       port: 1521,
-      username: 'YOUM',
+      username: 'YEOM',
       password: 'passwd',
       database: '강원식자재마트',
       sid: "XE",
       entities: [
         ItemsForSale,
-        ItemStorage],
+        ItemStorage,
+        DetailedCategory,
+        TopCategory],
       synchronize: true,
       logging: true,
     }),

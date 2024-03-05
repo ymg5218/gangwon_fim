@@ -11,26 +11,26 @@ export class ItemsForSaleController {
     ) {}
 
   @Post("/createItem")
-  create(@Body() createItemsForSaleDto: CreateItemsForSaleDto) {
-    return this.itemsForSaleService.create(createItemsForSaleDto);
+  async create(@Body() createItemsForSaleDto: CreateItemsForSaleDto) {
+    return await this.itemsForSaleService.create(createItemsForSaleDto);
   }
 
-  @Get('findAll')
+  @Get('/findAll')
   getAllItem() : Promise<ItemsForSale[]>{
     return this.itemsForSaleService.findAll();
   }
 
-  @Get(':id')
-  async getItem(@Param('id') id: number) : Promise<ItemsForSale>{
+  @Get('findOne/:item_id')
+  async getItem(@Param('item_id') id: number) : Promise<ItemsForSale>{
     return await this.itemsForSaleService.findOne(+id);
   }
 
-  @Patch(':item_id')
+  @Patch('update/:item_id')
   async update(@Param('item_id') item_id: number, @Body() updateItemsForSaleDto: UpdateItemsForSaleDto) {
     return await this.itemsForSaleService.update(+item_id, updateItemsForSaleDto);
   }
 
-  @Delete(':item_id')
+  @Delete('delete/:item_id')
   remove(@Param('item_id') item_id: number) {
     return this.itemsForSaleService.remove(+item_id);
   }

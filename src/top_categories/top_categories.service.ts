@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopCategoryDto } from './dto/create-top_category.dto';
 import { UpdateTopCategoryDto } from './dto/update-top_category.dto';
+import { TopCategory } from './entities/top_category.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TopCategoriesService {
-  create(createTopCategoryDto: CreateTopCategoryDto) {
-    return 'This action adds a new topCategory';
+  constructor(
+    @InjectRepository(TopCategory)
+    private topCategoryRepository: Repository<TopCategory>,
+  ){}
+
+  async create(createTopCategoryDto: CreateTopCategoryDto) {
+    const top_category = TopCategory.from(createTopCategoryDto);
+
+    const { top_cat_id } = await this.topCategoryRepository.save(top_category);
+    return top_cat_id;
   }
 
-  findAll() {
-    return `This action returns all topCategories`;
+  async findAll(): Promise<TopCategory[]> {
+    return await this.topCategoryRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} topCategory`;
+  async findOne(top_cat_id: number): Promise<TopCategory> {
+    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}})
+    
+    if (!top_category){
+      throw new NotFoundException(`상위 카테고리 아이디 ${ top_cat_id}를 찾을 수 없습니다.`);
+    }
+
+    return await top_category;
   }
 
-  update(id: number, updateTopCategoryDto: UpdateTopCategoryDto) {
-    return `This action updates a #${id} topCategory`;
+  async update(top_cat_id: number, updateTopCategoryDto: UpdateTopCategoryDto) {
+    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}})
+    
+    if (!top_category){
+      throw new NotFoundException(`상위 카테고리 아이디 ${ top_cat_id}를 찾을 수 없습니다.`);
+    }
+
+    Object.assign(top_category, updateTopCategoryDto);
+
+    return await this.topCategoryRepository.save(top_category);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} topCategory`;
+  async remove(top_cat_id: number) {
+    return await this.topCategoryRepository.delete(top_cat_id);
   }
 }
