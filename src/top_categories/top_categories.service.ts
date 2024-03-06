@@ -24,13 +24,13 @@ export class TopCategoriesService {
   }
 
   async findOne(top_cat_id: number): Promise<TopCategory> {
-    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}})
+    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}});
     
     if (!top_category){
       throw new NotFoundException(`상위 카테고리 아이디 ${ top_cat_id}를 찾을 수 없습니다.`);
     }
 
-    return await top_category;
+    return top_category;
   }
 
   async update(top_cat_id: number, updateTopCategoryDto: UpdateTopCategoryDto) {
@@ -42,7 +42,7 @@ export class TopCategoriesService {
 
     Object.assign(top_category, updateTopCategoryDto);
 
-    return await this.topCategoryRepository.save(top_category);
+    return this.topCategoryRepository.save(top_category);
   }
 
   async remove(top_cat_id: number) {

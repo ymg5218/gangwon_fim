@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemsForSale } from './entities/items_for_sale.entity';
 import { DetailedCategory } from 'src/detailed_categories/entities/detailed_category.entity';
 import { ItemStorage } from 'src/item_storage/entities/item_storage.entity';
+import { EventItem } from 'src/event_items/entities/event_item.entity';
 
 
 @Module({
@@ -12,7 +13,8 @@ import { ItemStorage } from 'src/item_storage/entities/item_storage.entity';
     TypeOrmModule.forFeature([
       ItemsForSale,
       DetailedCategory,
-      ItemStorage
+      ItemStorage,
+      EventItem,
     ])
   ],
   controllers: [ItemsForSaleController],

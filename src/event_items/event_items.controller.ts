@@ -7,28 +7,28 @@ import { UpdateEventItemDto } from './dto/update-event_item.dto';
 export class EventItemsController {
   constructor(private readonly eventItemsService: EventItemsService) {}
 
-  @Post()
-  create(@Body() createEventItemDto: CreateEventItemDto) {
-    return this.eventItemsService.create(createEventItemDto);
+  @Post('/createEventItem')
+  async create(@Body() createEventItemDto: CreateEventItemDto) {
+    return await this.eventItemsService.create(createEventItemDto);
   }
 
-  @Get()
-  findAll() {
-    return this.eventItemsService.findAll();
+  @Get('/findAll')
+  async findAll() {
+    return await this.eventItemsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventItemsService.findOne(+id);
+  @Post('/findOne')
+  async findOne(@Body() findInfo : any) {
+    return await this.eventItemsService.findOne(findInfo);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventItemDto: UpdateEventItemDto) {
-    return this.eventItemsService.update(+id, updateEventItemDto);
+  @Post('/update')
+  update(@Body() updateEventItemDto: UpdateEventItemDto) {
+    return this.eventItemsService.update(updateEventItemDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventItemsService.remove(+id);
+  @Post('/delete')
+  remove(@Body() deleteInfo: any) {
+    return this.eventItemsService.remove(deleteInfo);
   }
 }

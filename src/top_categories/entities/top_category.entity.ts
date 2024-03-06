@@ -10,6 +10,7 @@ export class TopCategory {
     @Column()
     top_cat_name : string
 
+    
     static from(createTopCategoryDto: CreateTopCategoryDto){
         const top_cat = new TopCategory();
         top_cat.top_cat_name = createTopCategoryDto.top_cat_name;
