@@ -15,23 +15,23 @@ export class TopCategoriesController {
     return await this.topCategoriesService.create(createTopCategoryDto);
   }
 
-  @Get('findAll')
+  @Get('/findAll')
   async findAll(): Promise<TopCategory[]> {
     return await this.topCategoriesService.findAll();
   }
 
-  @Get('findOne/:top_cat_id')
-  findOne(@Param('top_cat_id') top_cat_id: number) : Promise<TopCategory> {
-    return this.topCategoriesService.findOne(+top_cat_id);
+  @Get('/findOne/:top_cat_id')
+  async findOne(@Param('top_cat_id') top_cat_id: number) : Promise<TopCategory> {
+    return await this.topCategoriesService.findOne(+top_cat_id);
   }
 
-  @Patch('update/:top_cat_id')
-  update(@Param('top_cat_id') top_cat_id: number, @Body() updateTopCategoryDto: UpdateTopCategoryDto) {
-    return this.topCategoriesService.update(+top_cat_id, updateTopCategoryDto);
+  @Patch('/update/:top_cat_id')
+  async update(@Param('top_cat_id') top_cat_id: number, @Body() updateTopCategoryDto: UpdateTopCategoryDto) {
+    return await this.topCategoriesService.update(+top_cat_id, updateTopCategoryDto);
   }
 
-  @Delete('delete/:top_cat_id')
-  remove(@Param('top_cat_id') top_cat_id: number) {
-    return this.topCategoriesService.remove(+top_cat_id);
+  @Delete('/delete/:top_cat_id')
+  async remove(@Param('top_cat_id') top_cat_id: number) {
+    return await this.topCategoriesService.remove(+top_cat_id);
   }
 }

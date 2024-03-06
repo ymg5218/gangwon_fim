@@ -5,30 +5,32 @@ import { UpdateDetailedCategoryDto } from './dto/update-detailed_category.dto';
 
 @Controller('detailed-categories')
 export class DetailedCategoriesController {
-  constructor(private readonly detailedCategoriesService: DetailedCategoriesService) {}
+  constructor(
+    private readonly detailedCategoriesService: DetailedCategoriesService
+    ) {}
 
-  @Post()
-  create(@Body() createDetailedCategoryDto: CreateDetailedCategoryDto) {
-    return this.detailedCategoriesService.create(createDetailedCategoryDto);
+  @Post('/createDetailCat')
+  async create(@Body() createDetailedCategoryDto: CreateDetailedCategoryDto) {
+    return await this.detailedCategoriesService.create(createDetailedCategoryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.detailedCategoriesService.findAll();
+  @Get('/findAll')
+  async findAll() {
+    return await this.detailedCategoriesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detailedCategoriesService.findOne(+id);
+  @Get('/findOne/:detaild_cat_id')
+  async findOne(@Param('detaild_cat_id') detaild_cat_id: number) {
+    return await this.detailedCategoriesService.findOne(+detaild_cat_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDetailedCategoryDto: UpdateDetailedCategoryDto) {
-    return this.detailedCategoriesService.update(+id, updateDetailedCategoryDto);
+  @Patch('/update/:detaild_cat_id')
+  async update(@Param('detaild_cat_id') detaild_cat_id: number, @Body() updateDetailedCategoryDto: UpdateDetailedCategoryDto) {
+    return await this.detailedCategoriesService.update(+detaild_cat_id, updateDetailedCategoryDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.detailedCategoriesService.remove(+id);
+  @Delete('/delete/:detaild_cat_id')
+  async remove(@Param('detaild_cat_id') detaild_cat_id: number) {
+    return await this.detailedCategoriesService.remove(+detaild_cat_id);
   }
 }
