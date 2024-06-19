@@ -1,10 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Member } from './entities/member.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MemberService {
-  create(createMemberDto: CreateMemberDto) {
+  constructor(
+    @InjectRepository(Member)
+    private memberRepository: Repository<Member>,
+  ){}
+
+  async create(createMemberDto: CreateMemberDto) {
+    const member = Member.from(createMemberDto);
+    
+    await this.topCate
     return 'This action adds a new member';
   }
 
