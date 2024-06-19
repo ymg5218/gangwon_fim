@@ -34,6 +34,8 @@ async function bootstrap() {
 
   // console.log("result : ", result);
 
+  // 다른자원에서 접근할 수 있는 권한 부여
+  app.enableCors();
   await app.listen(3000);
 
 }
