@@ -8,9 +8,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ItemsForSaleService {
   constructor(
-    @InjectRepository(ItemsForSale)
+    @InjectRepository(ItemsForSale) 
     private itemforsaleRepository: Repository<ItemsForSale>,
-  ) { }
+  ){}
 
   async create(createItemsForSaleDto: CreateItemsForSaleDto) {
     const item = ItemsForSale.from(createItemsForSaleDto);
@@ -22,25 +22,23 @@ export class ItemsForSaleService {
   }
 
   async findAll(): Promise<ItemsForSale[]> {
-    const items = await this.itemforsaleRepository.find();
-    console.log(items); // 디버깅용
-    return items;
+    return await this.itemforsaleRepository.find();
   }
 
-  async findOne(item_id: number): Promise<ItemsForSale> {
-    const item = await this.itemforsaleRepository.findOne({ where: { item_id: item_id } });
+  async findOne(item_id : number) : Promise<ItemsForSale> {
+    const item = await this.itemforsaleRepository.findOne({ where : { item_id : item_id}});
 
-    if (!item) {
-      throw new NotFoundException(`상품 아이디 ${item_id}를 찾을 수 없음.`)
+    if (!item){
+      throw new NotFoundException(`상품 아이디 ${ item_id }를 찾을 수 없음.`)
     }
     return await item;
   }
 
-  async update(item_id: number, updateItemsForSaleDto: UpdateItemsForSaleDto): Promise<ItemsForSale> {
-    const item = await this.itemforsaleRepository.findOne({ where: { item_id: item_id } });
+  async update(item_id: number, updateItemsForSaleDto: UpdateItemsForSaleDto) : Promise<ItemsForSale>{
+    const item = await this.itemforsaleRepository.findOne({ where : { item_id : item_id}});
 
-    if (!item) {
-      throw new NotFoundException(`상품 아이디 ${item_id}를 찾을 수 없음.`)
+    if (!item){
+      throw new NotFoundException(`상품 아이디 ${ item_id }를 찾을 수 없음.`)
     };
 
     Object.assign(item, updateItemsForSaleDto);
