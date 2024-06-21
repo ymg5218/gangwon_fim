@@ -10,12 +10,11 @@ export class MemberService {
   constructor(
     @InjectRepository(Member)
     private memberRepository: Repository<Member>,
-  ){}
+  ) { }
 
   async create(createMemberDto: CreateMemberDto) {
     const member = Member.from(createMemberDto);
-    
-    await this.topCate
+
     return 'This action adds a new member';
   }
 
