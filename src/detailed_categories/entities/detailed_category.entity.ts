@@ -6,15 +6,15 @@ import { CreateDetailedCategoryDto } from "../dto/create-detailed_category.dto";
 @Entity()
 export class DetailedCategory {
     @PrimaryGeneratedColumn()
-    detailed_cat_id : number
+    detailed_cat_id: number
 
     @Column()
-    detailed_cat_name : string
+    detailed_cat_name: string
 
     @Column()
-    parent_cat_id : number
+    parent_cat_id: number
 
-    static from(createDetailedCategoryDto : CreateDetailedCategoryDto){
+    static from(createDetailedCategoryDto: CreateDetailedCategoryDto) {
         const detailed_cat = new DetailedCategory();
         detailed_cat.detailed_cat_name = createDetailedCategoryDto.detailed_cat_name;
         detailed_cat.parent_cat_id = createDetailedCategoryDto.parent_cat_id;
@@ -27,13 +27,13 @@ export class DetailedCategory {
         cascade: true,
     })
     @JoinColumn({
-        name : 'parent_cat_id',
+        name: 'parent_cat_id',
         referencedColumnName: 'top_cat_id'
     })
-    topCategory : TopCategory;
+    topCategory: TopCategory;
 
-    @OneToMany(() => ItemsForSale, (item) => item.cat_id, {
+    @OneToMany(() => ItemsForSale, (item) => item.detailedCategory, {
         cascade: true,
     })
-    items : ItemsForSale[];
+    items: ItemsForSale[];
 }

@@ -46,10 +46,11 @@ export class ItemsForSale {
         return item;
     }
 
-    @ManyToOne(() => DetailedCategory, (detailedCategory) => detailedCategory.detailed_cat_id, {
+    @ManyToOne(() => DetailedCategory, (detailedCategory) => detailedCategory.items, {
         onDelete: 'CASCADE',
     })
-    detailedCategory : DetailedCategory;
+    @JoinColumn({ name: 'cat_id' })
+    detailedCategory: DetailedCategory;
 
 
     @OneToMany(() => ItemStorage, (itemStorage) => itemStorage.item_id, {

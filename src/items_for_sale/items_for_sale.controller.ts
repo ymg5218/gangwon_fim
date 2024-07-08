@@ -8,7 +8,7 @@ import { ItemsForSale } from './entities/items_for_sale.entity';
 export class ItemsForSaleController {
   constructor(
     private readonly itemsForSaleService: ItemsForSaleService
-    ) {}
+  ) { }
 
   @Post("/createItem")
   async create(@Body() createItemsForSaleDto: CreateItemsForSaleDto) {
@@ -16,12 +16,17 @@ export class ItemsForSaleController {
   }
 
   @Get('/findAll')
-  getAllItem() : Promise<ItemsForSale[]>{
+  getAllItem(): Promise<ItemsForSale[]> {
     return this.itemsForSaleService.findAll();
   }
 
+  @Get('findAllWithCategory')
+  async getAllItemWithCategory() {
+    return this.itemsForSaleService.findAllWithCategory();
+  }
+
   @Get('findOne/:item_id')
-  async getItem(@Param('item_id') id: number) : Promise<ItemsForSale>{
+  async getItem(@Param('item_id') id: number): Promise<ItemsForSale> {
     return await this.itemsForSaleService.findOne(+id);
   }
 

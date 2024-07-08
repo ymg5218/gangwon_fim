@@ -27,7 +27,7 @@ import { EventItem } from './event_items/entities/event_item.entity';
       host: "localhost",
       port: 1521,
       username: 'YOUM',
-      password: 'passwd',
+      password: '220404',
       database: '강원식자재마트',
       sid: "XE",
       entities: [
@@ -68,4 +68,4 @@ import { EventItem } from './event_items/entities/event_item.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
