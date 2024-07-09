@@ -26,8 +26,8 @@ export class ItemsForSaleController {
   }
 
   @Get('findOne/:item_id')
-  async getItem(@Param('item_id') id: number): Promise<ItemsForSale> {
-    return await this.itemsForSaleService.findOne(+id);
+  async getItem(@Param('item_id') item_id: number): Promise<ItemsForSale> {
+    return await this.itemsForSaleService.findOne(+item_id);
   }
 
   @Patch('update/:item_id')

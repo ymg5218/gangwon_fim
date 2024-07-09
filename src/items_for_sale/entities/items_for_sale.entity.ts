@@ -21,19 +21,19 @@ export class ItemsForSale {
     cat_id: number;
 
     @Column()
-    item_name: string
+    item_name: string;
 
     @Column()
-    item_price: number
+    item_price: number;
 
     @Column()
-    item_unit: number
+    item_unit: number;
 
     @Column()
-    item_origin: string
+    item_origin: string;
 
     @Column()
-    item_info: string
+    item_info: string;
 
     static from(createItemsForSaleDto: CreateItemsForSaleDto) {
         const item = new ItemsForSale();
