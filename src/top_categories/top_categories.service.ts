@@ -10,7 +10,7 @@ export class TopCategoriesService {
   constructor(
     @InjectRepository(TopCategory)
     private topCategoryRepository: Repository<TopCategory>,
-  ){}
+  ) { }
 
   async create(createTopCategoryDto: CreateTopCategoryDto) {
     const top_category = TopCategory.from(createTopCategoryDto);
@@ -19,25 +19,32 @@ export class TopCategoriesService {
     return top_cat_id;
   }
 
+  async getItemsByTopCategory(topCatId: number) {
+    return this.topCategoryRepository.find({
+      where: { top_cat_id: topCatId },
+      relations: ['detailedCategory', 'detailedCategory.items']
+    });
+  }
+
   async findAll(): Promise<TopCategory[]> {
     return await this.topCategoryRepository.find();
   }
 
   async findOne(top_cat_id: number): Promise<TopCategory> {
-    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}});
-    
-    if (!top_category){
-      throw new NotFoundException(`상위 카테고리 아이디 ${ top_cat_id}를 찾을 수 없습니다.`);
+    const top_category = await this.topCategoryRepository.findOne({ where: { top_cat_id: top_cat_id } });
+
+    if (!top_category) {
+      throw new NotFoundException(`상위 카테고리 아이디 ${top_cat_id}를 찾을 수 없습니다.`);
     }
 
     return top_category;
   }
 
   async update(top_cat_id: number, updateTopCategoryDto: UpdateTopCategoryDto) {
-    const top_category = await this.topCategoryRepository.findOne({ where : { top_cat_id : top_cat_id}})
-    
-    if (!top_category){
-      throw new NotFoundException(`상위 카테고리 아이디 ${ top_cat_id}를 찾을 수 없습니다.`);
+    const top_category = await this.topCategoryRepository.findOne({ where: { top_cat_id: top_cat_id } })
+
+    if (!top_category) {
+      throw new NotFoundException(`상위 카테고리 아이디 ${top_cat_id}를 찾을 수 없습니다.`);
     }
 
     Object.assign(top_category, updateTopCategoryDto);

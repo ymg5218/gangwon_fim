@@ -8,11 +8,16 @@ import { TopCategory } from './entities/top_category.entity';
 export class TopCategoriesController {
   constructor(
     private readonly topCategoriesService: TopCategoriesService
-    ) {}
+  ) { }
 
   @Post('/createTopCat')
   async create(@Body() createTopCategoryDto: CreateTopCategoryDto) {
     return await this.topCategoriesService.create(createTopCategoryDto);
+  }
+
+  @Get('getItemsByCategory/:id')
+  async getItemsByTopCategory(@Param('id') id: number) {
+    return this.topCategoriesService.getItemsByTopCategory(id);
   }
 
   @Get('/findAll')
@@ -21,7 +26,7 @@ export class TopCategoriesController {
   }
 
   @Get('/findOne/:top_cat_id')
-  async findOne(@Param('top_cat_id') top_cat_id: number) : Promise<TopCategory> {
+  async findOne(@Param('top_cat_id') top_cat_id: number): Promise<TopCategory> {
     return await this.topCategoriesService.findOne(+top_cat_id);
   }
 
