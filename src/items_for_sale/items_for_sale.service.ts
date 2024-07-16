@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemsForSaleDto } from './dto/create-items_for_sale.dto';
 import { UpdateItemsForSaleDto } from './dto/update-items_for_sale.dto';
 import { ItemsForSale } from './entities/items_for_sale.entity';
+import { DetailedCategory } from 'src/detailed_categories/entities/detailed_category.entity';
+import { TopCategory } from 'src/top_categories/entities/top_category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -37,6 +39,24 @@ export class ItemsForSaleService {
         'item.item_info',
         'category.detailed_cat_name'
       ])
+      .getMany();
+  }
+
+  async findOneWithCategory(top_cat_id): Promise<any> {
+    console.log("findOneWithCategory-Service");
+    return this.itemforsaleRepository.createQueryBuilder('item')
+      .leftJoinAndSelect('item.detailedCategory', 'category')
+      .leftJoinAndSelect('category.topCategory', 'top_cat')
+      .select([
+        'item.item_id',
+        'item.item_name',
+        'item.item_price',
+        'item.item_unit',
+        'item.item_origin',
+        'item.item_info',
+        'category.detailed_cat_name'
+      ])
+      .where('top_cat.top_cat_id = :top_cat_id', { top_cat_id })
       .getMany();
   }
 

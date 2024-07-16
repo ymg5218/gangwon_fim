@@ -20,9 +20,15 @@ export class ItemsForSaleController {
     return this.itemsForSaleService.findAll();
   }
 
-  @Get('findAllWithCategory')
+  @Get('/findAllWithCategory')
   async getAllItemWithCategory() {
     return this.itemsForSaleService.findAllWithCategory();
+  }
+
+  @Get('/findOneWithCategory/:top_cat_id')
+  async getOneWithCategory(@Param('top_cat_id') top_cat_id: number) {
+    console.log("findOneWithCategory-Controller");
+    return await this.itemsForSaleService.findOneWithCategory(+top_cat_id);
   }
 
   @Get('findOne/:item_id')
