@@ -35,6 +35,9 @@ export class ItemsForSale {
     @Column()
     item_info: string;
 
+    @Column({ nullable: true })
+    imagePath: string;  // 이미지 경로 필드 추가
+
     static from(createItemsForSaleDto: CreateItemsForSaleDto) {
         const item = new ItemsForSale();
         item.cat_id = createItemsForSaleDto.cat_id;
@@ -43,6 +46,7 @@ export class ItemsForSale {
         item.item_unit = createItemsForSaleDto.item_unit;
         item.item_origin = createItemsForSaleDto.item_origin;
         item.item_info = createItemsForSaleDto.item_info;
+        item.imagePath = createItemsForSaleDto.imagePath;  // 이미지 경로 설정
         return item;
     }
 

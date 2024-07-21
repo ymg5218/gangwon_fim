@@ -2,8 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemsForSaleDto } from './dto/create-items_for_sale.dto';
 import { UpdateItemsForSaleDto } from './dto/update-items_for_sale.dto';
 import { ItemsForSale } from './entities/items_for_sale.entity';
-import { DetailedCategory } from 'src/detailed_categories/entities/detailed_category.entity';
-import { TopCategory } from 'src/top_categories/entities/top_category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -19,7 +17,6 @@ export class ItemsForSaleService {
 
     const { item_id } = await this.itemforsaleRepository.save(item);
 
-    // this.itemforsaleRepository.save(createItemsForSaleDto).then(() => throwIfEmpty())
     return item_id;
   }
 
@@ -59,7 +56,6 @@ export class ItemsForSaleService {
       .where('top_cat.top_cat_id = :top_cat_id', { top_cat_id })
       .getMany();
   }
-
 
   async findOne(item_id: number): Promise<ItemsForSale> {
     const item = await this.itemforsaleRepository.findOne({ where: { item_id: item_id } });

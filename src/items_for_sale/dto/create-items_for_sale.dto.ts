@@ -4,7 +4,7 @@ import { PrimaryGeneratedColumn } from "typeorm";
 export class CreateItemsForSaleDto {
 
     @PrimaryGeneratedColumn()
-    item_id : number;
+    item_id: number;
 
     @IsNumber()
     @IsNotEmpty()
@@ -27,5 +27,6 @@ export class CreateItemsForSaleDto {
     @IsString()
     item_info: string;
 
-    
+    @IsString()
+    imagePath?: string;
 }

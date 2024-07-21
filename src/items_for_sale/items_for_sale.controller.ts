@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ItemsForSaleService } from './items_for_sale.service';
 import { CreateItemsForSaleDto } from './dto/create-items_for_sale.dto';
 import { UpdateItemsForSaleDto } from './dto/update-items_for_sale.dto';
 import { ItemsForSale } from './entities/items_for_sale.entity';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/items-for-sale')
 export class ItemsForSaleController {
@@ -11,8 +14,24 @@ export class ItemsForSaleController {
   ) { }
 
   @Post("/createItem")
-  async create(@Body() createItemsForSaleDto: CreateItemsForSaleDto) {
-    return await this.itemsForSaleService.create(createItemsForSaleDto);
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './public/images',
+        filename: (req, file, callback) => {
+          const ext = extname(file.originalname);
+          const filename = `product${Date.now()}${ext}`;
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
+  async create(
+    @Body() createItemsForSaleDto: CreateItemsForSaleDto,
+    @UploadedFile() image: Express.Multer.File) {
+    const newItem = { ...createItemsForSaleDto, imagePath: `/images/${image.filename}` };
+    const item_id = await this.itemsForSaleService.create(newItem);
+    return { item_id };
   }
 
   @Get('/findAll')
